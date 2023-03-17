@@ -2,7 +2,7 @@
 // {
 //   viewer {
 //     login
-//     repositories(first: 10, after: null, before: null) {
+//     repositories(after: null, before: null, first: 10) {
 //       pageInfo {
 //         endCursor
 //         hasNextPage
@@ -10,18 +10,14 @@
 //         startCursor
 //       }
 //       edges {
-//       node {
-//         id
-//         name
-//         commitComments(last: 1) {
-//           nodes {
-//             createdAt
-//           }
+//         node {
+//           id
+//           name
+//           stargazerCount
+//           url
+//           updatedAt
 //         }
-//         resourcePath
-//         url
 //       }
-//     }
 //     }
 //   }
 // }

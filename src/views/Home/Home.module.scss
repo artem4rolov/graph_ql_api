@@ -1,0 +1,12 @@
+.Home {
+  width: 100%;
+
+  // display: flex;
+  // justify-content: center;
+}
+
+.HomeContent {
+  display: grid;
+  gap: 15px;
+  grid-template: ". . . .";
+}

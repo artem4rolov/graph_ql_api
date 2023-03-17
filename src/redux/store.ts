@@ -1,8 +1,12 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-// ...
+import reposReducer from "./slices/Repos/Repos";
 
-const rootReducer = combineReducers({});
+// здесь пишем все наши редюсеры и оборачиваем в главный rootReducer
+const rootReducer = combineReducers({
+  repos: reposReducer,
+});
 
+// herducer для store нашего приложения
 export const store = configureStore({
   reducer: rootReducer,
 });

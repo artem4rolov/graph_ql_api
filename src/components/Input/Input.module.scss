@@ -1,0 +1,59 @@
+.search {
+  background-color: rgb(215, 215, 215);
+  padding: 10px 10px 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 15px;
+  transition: all 0.3s;
+
+  input {
+    background-color: transparent;
+    border: none;
+    padding: 0 10px;
+    height: 60px;
+    width: 100%;
+    font-size: 16px;
+    line-height: 1.5;
+    outline: none;
+
+    @media (min-width: 768px) {
+      font-size: 20px;
+      line-height: 2;
+    }
+  }
+
+  button {
+    background-color: rgb(26, 26, 26);
+    padding: 12px 24px;
+    color: white;
+    border-radius: 10px;
+    border: none;
+    font-size: 16px;
+    line-height: 1.5;
+    cursor: pointer;
+
+    &:hover {
+      background-color: darken($color: rgb(0, 0, 0), $amount: 20);
+    }
+  }
+
+  svg {
+    width: 50px;
+  }
+
+  .error {
+    width: 20%;
+    color: rgb(176, 0, 0);
+  }
+}
+
+body[data-theme="dark"] {
+  .search {
+    background-color: var(--gray-400);
+
+    input {
+      color: var(--white);
+    }
+  }
+}

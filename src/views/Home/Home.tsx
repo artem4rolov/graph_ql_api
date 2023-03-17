@@ -1,52 +1,39 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
+import Input from "../../components/Input/Input";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { fetchAllMyRepos } from "../../redux/slices/Repos/reposAsyncActions";
+import { RepoType } from "../../types/RepoType";
+import RepoCard from "../../components/RepoCard/RepoCard";
 
-interface SearchProps {
-  // hasError: boolean;
-  search: (text: string) => void;
-}
+import styles from "./Home.module.scss";
 
-const Home = ({ search }: SearchProps) => {
-  const inputRef = useRef<HTMLInputElement | null>(null);
+const Home = () => {
+  const { list, pagination } = useAppSelector((state) => state.repos);
+  const dispatch = useAppDispatch();
 
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    search(`query {
-      repository(owner:"octocat", name:"Hello-World") {
-        issues(last:20, states:CLOSED) {
-          edges {
-            node {
-              title
-              url
-              labels(first:5) {
-                edges {
-                  node {
-                    name
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }`);
+  useEffect(() => {
+    dispatch(fetchAllMyRepos());
+  }, []);
 
-    // if (inputRef.current) {
-    //   const text = inputRef.current?.value || "";
-    //   console.log(text);
-    //   search(text.trim());
-    // }
-  };
+  console.log(list);
+  console.log(pagination);
+
+  // поиск репозиториев
+  const handleSearch = () => {};
 
   return (
-    <div className="Home">
-      <form action="" onSubmit={handleSearch} autoComplete="off">
-        <div>
-          {/* <SearchIcon /> */}
-          <input type="text" name="search__input" ref={inputRef} />
-          {/* <div className={styles.error}>{hasError ? "Not found" : ""}</div> */}
-          <button type="submit">Search</button>
-        </div>
-      </form>
+    <div className={styles.Home}>
+      <Input onSearch={handleSearch} />
+      <div className={styles.HomeContent}>
+        {list
+          ? list.map((repo) => {
+              return (
+                <RepoCard key={repo.node.id + Math.random()} card={repo.node} />
+              );
+            })
+          : "no cards"}
+        <span>what</span>
+      </div>
     </div>
   );
 };
