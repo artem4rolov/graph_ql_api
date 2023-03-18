@@ -1,25 +1,46 @@
 import React, { useEffect, useRef } from "react";
 import Input from "../../components/Input/Input";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { fetchAllMyRepos } from "../../redux/slices/Repos/reposAsyncActions";
+import {
+  fetchAllMyRepos,
+  searchRepoByName,
+} from "../../redux/slices/Repos/reposAsyncActions";
 import { RepoType } from "../../types/RepoType";
 import RepoCard from "../../components/RepoCard/RepoCard";
 
 import styles from "./Home.module.scss";
+import Pagination from "../../components/Pagination/Pagination";
 
 const Home = () => {
-  const { list, pagination } = useAppSelector((state) => state.repos);
+  const [searchValue, setSearchValue] = React.useState<string | null>(null);
+
+  const { list, refreshData } = useAppSelector((state) => state.repos);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(fetchAllMyRepos());
+    dispatch(fetchAllMyRepos({ next: null, prev: null }));
   }, []);
 
+  useEffect(() => {}, [refreshData]);
+
   console.log(list);
-  console.log(pagination);
 
   // поиск репозиториев
-  const handleSearch = () => {};
+  const handleSearch = (value: string | null) => {
+    if (value?.trim() !== null) {
+      setSearchValue(value);
+      dispatch(
+        searchRepoByName({
+          repoName: value,
+          next: null,
+          prev: null,
+        })
+      );
+    }
+    dispatch(fetchAllMyRepos({ next: null, prev: null }));
+  };
+
+  // const changePage = (value) => {};
 
   return (
     <div className={styles.Home}>
@@ -32,8 +53,8 @@ const Home = () => {
               );
             })
           : "no cards"}
-        <span>what</span>
       </div>
+      <Pagination searchValue={searchValue} />
     </div>
   );
 };

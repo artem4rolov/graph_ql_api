@@ -1,23 +1,25 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { RepoType } from "../../../types/RepoType";
+import { PaginationType } from "../../../types/RepoType";
 
 const githubData: any = {
-  token: "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",
+  token: "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",
   username: "artem4rolov",
 };
 
-export const fetchAllMyRepos = createAsyncThunk("fetchAllMyRepos", async () => {
-  const response = await fetch("https://api.github.com/graphql", {
-    method: "POST",
-    headers: {
-      Authorization: `bearer ${githubData["token"]}`,
-      "Content-type": "application/json",
-    },
-    body: JSON.stringify({
-      query: `{
+export const fetchAllMyRepos = createAsyncThunk(
+  "fetchAllMyRepos",
+  async (pagination: { next: string | null; prev: string | null }) => {
+    const response = await fetch("https://api.github.com/graphql", {
+      method: "POST",
+      headers: {
+        Authorization: `bearer ${githubData["token"]}`,
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({
+        query: `{
         viewer {
           login
-          repositories(after: null, before: null, first: 10) {
+          repositories(first: 10, after: ${pagination?.next}, before: ${pagination?.prev}) {
             pageInfo {
               endCursor
               hasNextPage
@@ -36,13 +38,66 @@ export const fetchAllMyRepos = createAsyncThunk("fetchAllMyRepos", async () => {
           }
         }
       }`,
-    }),
-  }).then((response) => response.json());
-  // затипизировать репозиторий (для списка репозиториев)
-  return response;
-});
+      }),
+    }).then((res) => {
+      return res.json();
+    });
+    // затипизировать репозиторий (для списка репозиториев)
+    return response;
+  }
+);
 
 export const fetchCurrentRepo = createAsyncThunk(
   "fetchCurrentRepo",
   async (params) => {}
+);
+
+export const searchRepoByName = createAsyncThunk(
+  "searchRepoByName",
+  async (data: {
+    repoName: string | null;
+    next: string | null;
+    prev: string | null;
+  }) => {
+    const response = await fetch("https://api.github.com/graphql", {
+      method: "POST",
+      headers: {
+        Authorization: `bearer ${githubData["token"]}`,
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({
+        query: `{
+          search(
+            query: "${data.repoName}"
+            type: REPOSITORY
+            first: 10
+            after: ${data.next}
+            before: ${data.prev}
+          ) {
+            edges {
+              node {
+                ... on Repository {
+                  id
+                  name
+                  updatedAt
+                  stargazerCount
+                  url
+                }
+              }
+            }
+            pageInfo {
+              hasNextPage
+              endCursor
+              startCursor
+              hasPreviousPage
+            }
+          }
+        }`,
+      }),
+    }).then((res) => {
+      return res.json();
+    });
+    // затипизировать репозиторий (для списка репозиториев)
+    return response;
+  }
 );

@@ -5,7 +5,7 @@ import { FiSearch } from "react-icons/fi";
 
 interface InputProps {
   // hasError: boolean;
-  onSearch: (text: string) => void;
+  onSearch: (text: string | null) => void;
 }
 
 const Input = ({ onSearch }: InputProps) => {
@@ -13,20 +13,22 @@ const Input = ({ onSearch }: InputProps) => {
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(inputRef.current?.value);
-
-    // if (inputRef.current) {
-    //   const text = inputRef.current?.value || "";
-    //   console.log(text);
-    //   search(text.trim());
-    // }
+    if (inputRef.current) {
+      onSearch(inputRef.current?.value.trim());
+    }
+    return;
   };
 
   return (
     <form action="" onSubmit={handleSearch} autoComplete="off">
       <div className={styles.search}>
         <FiSearch />
-        <input type="text" name="search__input" ref={inputRef} />
+        <input
+          type="text"
+          name="search__input"
+          ref={inputRef}
+          onInput={handleSearch}
+        />
         {/* <div className={styles.error}>{hasError ? "Not found" : ""}</div> */}
         <button type="submit">Search</button>
       </div>
