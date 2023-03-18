@@ -1,10 +1,10 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-// import process from "process";
-
+// импортируем access token classic из gitHub для доступа к gitHub api
 const configValue: string =
   import.meta.env.VITE_SOME_STRING || process.env.VITE_SOME_STRING;
 
+// получение моих репозиториев
 export const fetchAllMyRepos = createAsyncThunk(
   "fetchAllMyRepos",
   async (pagination: { next: string | null; prev: string | null }) => {
@@ -32,6 +32,9 @@ export const fetchAllMyRepos = createAsyncThunk(
                 stargazerCount
                 url
                 updatedAt
+                owner {
+                  login
+                }
               }
             }
           }
@@ -46,11 +49,47 @@ export const fetchAllMyRepos = createAsyncThunk(
   }
 );
 
+// получение конкретного репозитория по клику
 export const fetchCurrentRepo = createAsyncThunk(
   "fetchCurrentRepo",
-  async (params) => {}
+  async (data: { repoName: string | null; owner: string | null }) => {
+    const response = await fetch("https://api.github.com/graphql", {
+      method: "POST",
+      headers: {
+        Authorization: `bearer ${configValue}`,
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({
+        query: `{
+          repository(name: "${data.repoName}", owner: "${data.owner}") {
+            id
+            name
+            stargazerCount
+            owner {
+              avatarUrl
+              login
+              url
+            }
+            languages(first: 20) {
+              edges {
+                node {
+                  name
+                }
+              }
+            }
+            description
+            updatedAt
+          }
+        }`,
+      }),
+    }).then((res) => {
+      return res.json();
+    });
+    return response;
+  }
 );
 
+// поиск репозиотриев по ключевому слову из Input
 export const searchRepoByName = createAsyncThunk(
   "searchRepoByName",
   async (data: {
@@ -81,6 +120,9 @@ export const searchRepoByName = createAsyncThunk(
                   updatedAt
                   stargazerCount
                   url
+                  owner {
+                    login
+                  }
                 }
               }
             }

@@ -4,6 +4,7 @@ export type RepoType = {
   stargazerCount: number;
   url: string;
   updatedAt: Date;
+  owner: { login: string };
 };
 
 export type PaginationType = {
@@ -18,6 +19,6 @@ export type CurrentRepoType = {
   description: string;
   languages: [string];
   name: string;
-  owner: [string];
+  owner: { login: string; avatarUrl: string; url: string };
   stargazerCount: number;
 };

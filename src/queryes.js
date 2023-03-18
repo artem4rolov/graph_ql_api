@@ -16,6 +16,9 @@
 //           stargazerCount
 //           url
 //           updatedAt
+// owner {
+//   login
+// }
 //         }
 //       }
 //     }
@@ -39,6 +42,9 @@
 //           updatedAt
 //           stargazerCount
 //           url
+// owner {
+//   login
+// }
 //         }
 //       }
 //     }
@@ -71,5 +77,6 @@
 //       }
 //     }
 //     description
+//     updatedAt
 //   }
 // }

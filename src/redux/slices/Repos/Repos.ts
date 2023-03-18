@@ -1,17 +1,27 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { PaginationType, RepoType } from "../../../types/RepoType";
-import { fetchAllMyRepos, searchRepoByName } from "./reposAsyncActions";
+import {
+  CurrentRepoType,
+  PaginationType,
+  RepoType,
+} from "../../../types/RepoType";
+import {
+  fetchAllMyRepos,
+  fetchCurrentRepo,
+  searchRepoByName,
+} from "./reposAsyncActions";
 
 type ReposSlice = {
   refreshData: boolean;
   status: "idle" | "loading" | "finished" | "error";
   list: { node: RepoType }[] | null;
   pagination: PaginationType | null;
+  currentRepo: CurrentRepoType | null;
 };
 
 // пустой массив репозиториев
 const initialState: ReposSlice = {
   refreshData: false,
+  currentRepo: null,
   pagination: null,
   list: null,
   status: "idle",
@@ -51,6 +61,21 @@ const reposSlise = createSlice({
         state.pagination = action.payload?.data.search.pageInfo;
       })
       .addCase(searchRepoByName.rejected, (state) => {
+        state.status = "error";
+        state.refreshData = false;
+      })
+
+      // открытие репозитория и его подробных данных по клику
+      .addCase(fetchCurrentRepo.pending, (state) => {
+        state.status = "loading";
+        state.refreshData = false;
+      })
+      .addCase(fetchCurrentRepo.fulfilled, (state, action) => {
+        state.status = "finished";
+        state.refreshData = true;
+        state.currentRepo = action.payload?.data.repository;
+      })
+      .addCase(fetchCurrentRepo.rejected, (state) => {
         state.status = "error";
         state.refreshData = false;
       });
