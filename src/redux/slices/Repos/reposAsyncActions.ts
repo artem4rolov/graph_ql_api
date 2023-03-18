@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-const configValue: string = import.meta.env.SOME_STRING;
+const configValue: string = import.meta.env.VITE_SOME_STRING;
 
 export const fetchAllMyRepos = createAsyncThunk(
   "fetchAllMyRepos",
