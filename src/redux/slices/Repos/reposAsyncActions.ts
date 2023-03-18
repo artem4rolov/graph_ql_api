@@ -1,5 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
+// import process from "process";
+
 const configValue: string =
   import.meta.env.VITE_SOME_STRING || process.env.VITE_SOME_STRING;
 
