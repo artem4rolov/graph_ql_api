@@ -8,6 +8,8 @@ import "./index.css";
 import App from "./App";
 import { store } from "./redux/store";
 
+// console.log(import.process.env.SOME_STRING);
+
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <BrowserRouter>
     <Provider store={store}>

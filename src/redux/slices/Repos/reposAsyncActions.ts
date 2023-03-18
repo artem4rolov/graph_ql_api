@@ -1,10 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { PaginationType } from "../../../types/RepoType";
 
-const githubData: any = {
-  token: "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",
-  username: "artem4rolov",
-};
+const configValue: string = import.meta.env.SOME_STRING;
 
 export const fetchAllMyRepos = createAsyncThunk(
   "fetchAllMyRepos",
@@ -12,7 +8,7 @@ export const fetchAllMyRepos = createAsyncThunk(
     const response = await fetch("https://api.github.com/graphql", {
       method: "POST",
       headers: {
-        Authorization: `bearer ${githubData["token"]}`,
+        Authorization: `bearer ${configValue}`,
         "Content-type": "application/json",
       },
       body: JSON.stringify({
@@ -62,7 +58,7 @@ export const searchRepoByName = createAsyncThunk(
     const response = await fetch("https://api.github.com/graphql", {
       method: "POST",
       headers: {
-        Authorization: `bearer ${githubData["token"]}`,
+        Authorization: `bearer ${configValue}`,
         "Content-type": "application/json",
       },
       body: JSON.stringify({
