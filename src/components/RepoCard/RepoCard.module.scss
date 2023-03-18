@@ -1,10 +1,138 @@
 .repoCard {
-  width: 270px;
-  background: blue;
+  width: 500px;
+  background-color: rgb(164, 164, 164);
   color: white;
   border-radius: 18px;
-
+  padding: 20px;
   display: flex;
   justify-content: start;
+  align-items: start;
   flex-direction: column;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    background-color: rgb(26, 26, 26);
+
+    .iconCard svg {
+      width: 35px;
+      height: 35px;
+    }
+  }
+}
+
+svg {
+  background: white;
+  border-radius: 50px;
+  fill: black;
+  width: 30px;
+  height: 30px;
+  padding: 5px;
+}
+
+.iconCard svg {
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  background: transparent;
+  fill: white;
+  top: 5px;
+  right: 7px;
+  border-radius: 50px;
+
+  transition: all 0.3s ease-in-out;
+}
+
+.repoName {
+  margin-bottom: 20px;
+
+  span {
+    background: white;
+    border-radius: 18px;
+    color: rgb(26, 26, 26);
+    text-align: center;
+    padding: 8px;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+}
+
+.iconStars {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  gap: 15px;
+  margin-bottom: 20px;
+
+  span {
+    background: white;
+    border-radius: 18px;
+    color: rgb(26, 26, 26);
+    text-align: center;
+    padding: 5px 10px;
+  }
+}
+
+.iconDate {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  gap: 15px;
+  margin-bottom: 20px;
+
+  span {
+    background: white;
+    border-radius: 18px;
+    color: rgb(26, 26, 26);
+    text-align: center;
+    padding: 5px 10px;
+  }
+}
+
+.iconHrefOnRepo {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  gap: 15px;
+
+  a {
+    text-decoration: none;
+    background: white;
+    border-radius: 18px;
+    color: rgb(26, 26, 26);
+    text-align: center;
+    padding: 5px 10px;
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+      background-color: rgb(26, 26, 26);
+      color: white;
+    }
+  }
+}
+
+@media (max-width: 1200px) {
+  .repoCard {
+    width: 400px;
+  }
+}
+
+@media (max-width: 978px) {
+  .repoCard {
+    width: 500px;
+    // padding: 0;
+  }
+}
+
+@media (max-width: 569px) {
+  .repoCard {
+    width: 300px;
+  }
+}
+
+@media (max-width: 360px) {
+  .repoCard {
+    width: 280px;
+  }
 }

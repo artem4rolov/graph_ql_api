@@ -1,0 +1,19 @@
+.Pagination {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  button {
+    background-color: rgb(26, 26, 26);
+    padding: 12px 24px;
+    color: white;
+    border-radius: 10px;
+    border: none;
+    font-size: 16px;
+    line-height: 1.5;
+    cursor: pointer;
+
+    &:hover {
+      background-color: darken($color: rgb(0, 0, 0), $amount: 20);
+    }
+  }
+}

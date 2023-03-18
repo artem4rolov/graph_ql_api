@@ -13,11 +13,12 @@ import styles from "./Home.module.scss";
 import Pagination from "../../components/Pagination/Pagination";
 import { Navigate, useNavigate } from "react-router";
 import { Link, NavLink } from "react-router-dom";
+import Loading from "../../components/Loading/Loading";
 
 const Home = () => {
   const [searchValue, setSearchValue] = React.useState<string | null>(null);
 
-  const { list } = useAppSelector((state) => state.repos);
+  const { list, status } = useAppSelector((state) => state.repos);
   const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
@@ -59,17 +60,19 @@ const Home = () => {
       <Input onSearch={handleSearch} />
       {/* секция с карточками репозиториев */}
       <div className={styles.HomeContent}>
-        {list
-          ? list.map((repo) => {
-              return (
-                <RepoCard
-                  key={repo.node.id}
-                  card={repo.node}
-                  openRepo={handleOpenCurrentRepo}
-                />
-              );
-            })
-          : "no cards"}
+        {list && status !== "loading" ? (
+          list.map((repo) => {
+            return (
+              <RepoCard
+                key={repo.node.id}
+                card={repo.node}
+                openRepo={handleOpenCurrentRepo}
+              />
+            );
+          })
+        ) : (
+          <Loading />
+        )}
       </div>
       {/* секция пагинации */}
       <Pagination searchValue={searchValue} />

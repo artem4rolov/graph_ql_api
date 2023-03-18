@@ -1,5 +1,5 @@
 .search {
-  background-color: rgb(215, 215, 215);
+  background-color: rgb(164, 164, 164);
   padding: 10px 10px 10px 20px;
   display: flex;
   align-items: center;
@@ -16,11 +16,6 @@
     font-size: 16px;
     line-height: 1.5;
     outline: none;
-
-    @media (min-width: 768px) {
-      font-size: 20px;
-      line-height: 2;
-    }
   }
 
   button {
@@ -48,12 +43,8 @@
   }
 }
 
-body[data-theme="dark"] {
-  .search {
-    background-color: var(--gray-400);
-
-    input {
-      color: var(--white);
-    }
+@media (max-width: 569px) {
+  svg {
+    width: 25px;
   }
 }

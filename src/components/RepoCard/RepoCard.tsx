@@ -1,7 +1,11 @@
-import React from "react";
 import { RepoType } from "../../types/RepoType";
 
 import styles from "./RepoCard.module.scss";
+
+import { TfiGithub } from "react-icons/tfi";
+import { FaStarHalfAlt } from "react-icons/fa";
+import { MdOutlineUpdate } from "react-icons/Md";
+import { GoLogoGithub } from "react-icons/go";
 
 interface RepoCardProps {
   card: RepoType;
@@ -21,12 +25,24 @@ const RepoCard = ({ card, openRepo }: RepoCardProps) => {
       // по клику на карточку репозитория передаем id карточки (для перехода по роуту), название репозитория и логин вадельца репозитория (для получения подробных данных о р)
       onClick={() => openRepo(id, name, owner.login)}
     >
-      <span>Имя репозитория: {name}</span>
-      <p>звезды: {stargazerCount}</p>
-      <div>
-        <p>{updatedAt.toString()}</p>
+      <div className={styles.iconCard}>
+        <TfiGithub />
+      </div>
+      <div className={styles.repoName}>
+        <span>{name}</span>
+      </div>
+      <div className={styles.iconStars}>
+        <FaStarHalfAlt />
+        <span>{stargazerCount}</span>
+      </div>
+      <div className={styles.iconDate}>
+        <MdOutlineUpdate />
+        <span>{new Date(updatedAt).toDateString()}</span>
+      </div>
+      <div className={styles.iconHrefOnRepo}>
+        <GoLogoGithub />
         <a href={url} target="_blank">
-          Репозиторий
+          Ссылка на Репозиторий
         </a>
       </div>
     </div>

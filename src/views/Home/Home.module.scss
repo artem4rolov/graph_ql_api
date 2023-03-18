@@ -11,11 +11,19 @@
 .HomeContent {
   display: grid;
   gap: 15px;
-  grid-template: ". . . .";
+  grid-template: ". .";
+  justify-content: space-between;
 }
 
 @media (max-width: 1120px) {
   .HomeContent {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template: ". .";
+  }
+}
+
+@media (max-width: 978px) {
+  .HomeContent {
+    grid-template: ".";
+    justify-content: center;
   }
 }
