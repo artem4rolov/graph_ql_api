@@ -1,24 +1,46 @@
-import React, { useRef } from "react";
-
 import styles from "./Input.module.scss";
 import { FaSearch } from "react-icons/fa";
+import { useEffect, useState } from "react";
+import { fetchAllMyRepos } from "../../redux/slices/Repos/reposAsyncActions";
+import { useAppDispatch } from "../../redux/hooks";
 
 interface InputProps {
   // hasError: boolean;
   onSearch: (text: string | null) => void;
 }
 
-const Input = ({ onSearch }: InputProps) => {
-  const inputRef = useRef<HTMLInputElement | null>(null);
-  const localValue = JSON.parse(localStorage.getItem("search") || "[]");
+type FormFields = {
+  searchInput: HTMLInputElement;
+};
 
-  const handleSearch = (e: React.FormEvent) => {
+const Input = ({ onSearch }: InputProps) => {
+  const [value, setValue] = useState<
+    string | number | readonly string[] | undefined
+  >(undefined);
+  const localValue = localStorage.getItem("search") || "";
+
+  const dispatch = useAppDispatch();
+
+  // если в localStorage есть старое значение из input - оставляем его в стейте
+  useEffect(() => {
+    if (localValue) {
+      setValue(localValue);
+    }
+  }, []);
+
+  const handleSearch = (e: React.FormEvent<HTMLFormElement & FormFields>) => {
     e.preventDefault();
 
-    if (inputRef.current && document.activeElement === inputRef.current) {
-      localStorage.setItem("search", inputRef.current.value);
-      onSearch(inputRef.current?.value.trim());
+    localStorage.setItem("search", value as string);
+
+    const text = localValue;
+    if (
+      text.length > 0 &&
+      document.activeElement === e.currentTarget.searchInput
+    ) {
+      onSearch(text);
     }
+    dispatch(fetchAllMyRepos({ next: null, prev: null }));
     return;
   };
 
@@ -28,13 +50,13 @@ const Input = ({ onSearch }: InputProps) => {
         <FaSearch />
         <input
           type="text"
-          name="search__input"
-          ref={inputRef}
-          value={localValue}
-          onInput={handleSearch}
+          name="searchInput"
+          value={value}
+          onChange={(e) => setValue(e.currentTarget.value)}
         />
-        {/* <div className={styles.error}>{hasError ? "Not found" : ""}</div> */}
-        <button type="submit">Search</button>
+        <button type="submit" onClick={() => handleSearch}>
+          Search
+        </button>
       </div>
     </form>
   );

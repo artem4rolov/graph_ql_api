@@ -49,7 +49,9 @@ const reposSlise = createSlice({
         state.status = "finished";
         state.currentRepo = null;
         state.list = action.payload?.data.viewer.repositories.edges;
+        localStorage.setItem("list", JSON.stringify(state.list));
         state.pagination = action.payload?.data.viewer.repositories.pageInfo;
+        localStorage.setItem("pagination", JSON.stringify(state.pagination));
       })
       .addCase(fetchAllMyRepos.rejected, (state) => {
         state.status = "error";
@@ -65,7 +67,9 @@ const reposSlise = createSlice({
         state.status = "finished";
         state.currentRepo = null;
         state.list = action.payload?.data.search.edges;
+        localStorage.setItem("list", JSON.stringify(state.list));
         state.pagination = action.payload?.data.search.pageInfo;
+        localStorage.setItem("pagination", JSON.stringify(state.pagination));
       })
       .addCase(searchRepoByName.rejected, (state) => {
         state.status = "error";
