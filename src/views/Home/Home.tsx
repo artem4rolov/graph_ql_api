@@ -28,20 +28,14 @@ const Home = () => {
 
   // поиск репозиториев
   const handleSearch = (value: string | null) => {
-    if (value !== null) {
-      setSearchValue(value);
-      dispatch(
-        searchRepoByName({
-          repoName: value,
-          next: null,
-          prev: null,
-        })
-      );
-    }
-    // если поле пустое, то по нажатию enter будут выводиться мои репозитории
-    if (value?.length === 0 && list) {
-      dispatch(fetchAllMyRepos({ next: null, prev: null }));
-    }
+    setSearchValue(value);
+    dispatch(
+      searchRepoByName({
+        repoName: value,
+        next: null,
+        prev: null,
+      })
+    );
   };
 
   // открываем карточку репозитория

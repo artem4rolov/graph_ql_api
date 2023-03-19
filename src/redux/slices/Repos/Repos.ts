@@ -44,6 +44,7 @@ const reposSlise = createSlice({
       .addCase(fetchAllMyRepos.pending, (state) => {
         state.status = "loading";
         state.list = null;
+        localStorage.setItem("list", JSON.stringify(state.list));
       })
       .addCase(fetchAllMyRepos.fulfilled, (state, action) => {
         state.status = "finished";
@@ -62,6 +63,7 @@ const reposSlise = createSlice({
       .addCase(searchRepoByName.pending, (state) => {
         state.status = "loading";
         state.list = null;
+        localStorage.setItem("list", JSON.stringify(state.list));
       })
       .addCase(searchRepoByName.fulfilled, (state, action) => {
         state.status = "finished";

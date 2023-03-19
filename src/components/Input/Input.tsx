@@ -16,29 +16,32 @@ type FormFields = {
 const Input = ({ onSearch }: InputProps) => {
   const [value, setValue] = useState<
     string | number | readonly string[] | undefined
-  >(undefined);
+  >("");
   const localValue = localStorage.getItem("search") || "";
 
   const dispatch = useAppDispatch();
 
   // если в localStorage есть старое значение из input - оставляем его в стейте
   useEffect(() => {
-    if (localValue) {
+    if (localValue !== undefined) {
       setValue(localValue);
+    } else {
+      setValue("");
     }
   }, []);
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement & FormFields>) => {
     e.preventDefault();
+    const text = e.currentTarget.searchInput.value;
 
-    localStorage.setItem("search", value as string);
+    localStorage.setItem("search", text as string);
 
-    const text = localValue;
     if (
       text.length > 0 &&
       document.activeElement === e.currentTarget.searchInput
     ) {
       onSearch(text);
+      return;
     }
     dispatch(fetchAllMyRepos({ next: null, prev: null }));
     return;
