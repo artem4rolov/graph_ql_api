@@ -1,5 +1,6 @@
 .repoCard {
-  width: 500px;
+  width: 100%;
+  max-width: 510px;
   background-color: rgb(164, 164, 164);
   color: white;
   border-radius: 18px;
@@ -114,25 +115,12 @@ svg {
 
 @media (max-width: 1200px) {
   .repoCard {
-    width: 400px;
+    max-width: 400px;
   }
 }
 
-@media (max-width: 978px) {
+@media (max-width: 1024px) {
   .repoCard {
-    width: 500px;
-    // padding: 0;
-  }
-}
-
-@media (max-width: 569px) {
-  .repoCard {
-    width: 300px;
-  }
-}
-
-@media (max-width: 360px) {
-  .repoCard {
-    width: 280px;
+    max-width: 100%;
   }
 }

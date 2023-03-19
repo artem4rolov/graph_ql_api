@@ -9,21 +9,22 @@
 }
 
 .HomeContent {
-  display: grid;
+  display: flex;
   gap: 15px;
-  grid-template: ". .";
+  align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
 }
 
-@media (max-width: 1120px) {
-  .HomeContent {
-    grid-template: ". .";
-  }
+.HomeContent,
+.Loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 @media (max-width: 978px) {
   .HomeContent {
-    grid-template: ".";
     justify-content: center;
   }
 }

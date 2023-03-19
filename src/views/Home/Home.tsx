@@ -6,13 +6,11 @@ import {
   fetchCurrentRepo,
   searchRepoByName,
 } from "../../redux/slices/Repos/reposAsyncActions";
-import { RepoType } from "../../types/RepoType";
 import RepoCard from "../../components/RepoCard/RepoCard";
 
 import styles from "./Home.module.scss";
 import Pagination from "../../components/Pagination/Pagination";
-import { Navigate, useNavigate } from "react-router";
-import { Link, NavLink } from "react-router-dom";
+import { useNavigate } from "react-router";
 import Loading from "../../components/Loading/Loading";
 
 const Home = () => {
@@ -41,7 +39,9 @@ const Home = () => {
       );
     }
     // если поле пустое, то по нажатию enter будут выводиться мои репозитории
-    dispatch(fetchAllMyRepos({ next: null, prev: null }));
+    if (value?.length === 0 && list) {
+      dispatch(fetchAllMyRepos({ next: null, prev: null }));
+    }
   };
 
   const handleOpenCurrentRepo = (

@@ -4,7 +4,7 @@ import styles from "./RepoCard.module.scss";
 
 import { TfiGithub } from "react-icons/tfi";
 import { FaStarHalfAlt } from "react-icons/fa";
-import { MdOutlineUpdate } from "react-icons/Md";
+import { MdOutlineUpdate } from "react-icons/md";
 import { GoLogoGithub } from "react-icons/go";
 
 interface RepoCardProps {

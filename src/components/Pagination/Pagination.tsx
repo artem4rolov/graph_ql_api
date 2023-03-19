@@ -12,12 +12,8 @@ interface PaginationProps {
 }
 
 const Pagination = ({ searchValue }: PaginationProps) => {
-  const { pagination, refreshData } = useAppSelector((state) => state.repos);
+  const { pagination } = useAppSelector((state) => state.repos);
   const dispatch = useAppDispatch();
-
-  console.log(searchValue);
-
-  React.useEffect(() => {}, [refreshData]);
 
   const handleNextPage = () => {
     if (pagination?.hasNextPage && !searchValue) {
@@ -59,7 +55,7 @@ const Pagination = ({ searchValue }: PaginationProps) => {
         onClick={handlePrevPage}
         disabled={!pagination?.hasPreviousPage || !pagination?.startCursor}
       >
-        {!searchValue ? "В начало" : "Рандом"}
+        В начало
       </button>
       <button
         onClick={handleNextPage}
