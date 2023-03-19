@@ -13,16 +13,24 @@ import {
 // типизация переменных стейта
 type ReposSlice = {
   status: "idle" | "loading" | "finished" | "error";
-  list: { node: RepoType }[] | null;
-  pagination: PaginationType | null;
+  list: { node: RepoType }[] | null | undefined;
+  pagination: PaginationType | null | undefined;
   currentRepo: CurrentRepoType | null;
 };
+
+// если есть список репозиториев и пагинации в localStorage - забираем их
+const list = localStorage.getItem("list")
+  ? JSON.parse(localStorage.getItem("list") || "[]")
+  : null;
+const pagination = localStorage.getItem("pagination")
+  ? JSON.parse(localStorage.getItem("pagination") || "[]")
+  : null;
 
 // пустой массив репозиториев
 const initialState: ReposSlice = {
   currentRepo: null,
-  pagination: null,
-  list: null,
+  pagination,
+  list,
   status: "idle",
 };
 

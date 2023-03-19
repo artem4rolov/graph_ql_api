@@ -44,6 +44,17 @@ export const fetchAllMyRepos = createAsyncThunk(
     }).then((res) => {
       return res.json();
     });
+
+    // заносим данные списка репозиториев и пагинации в localStorage для сохранения данных поиска и пагинации при закрытии вкладки или ее перезагрузки
+    localStorage.setItem(
+      "list",
+      JSON.stringify(response?.data.viewer.repositories.edges)
+    );
+    localStorage.setItem(
+      "pagination",
+      JSON.stringify(response?.data.viewer.repositories.pageInfo)
+    );
+
     // затипизировать репозиторий (для списка репозиториев)
     return response;
   }
@@ -138,6 +149,13 @@ export const searchRepoByName = createAsyncThunk(
     }).then((res) => {
       return res.json();
     });
+
+    // заносим данные списка репозиториев и пагинации в localStorage для сохранения данных поиска и пагинации при закрытии вкладки или ее перезагрузки
+    localStorage.setItem("list", JSON.stringify(response?.data.search.edges));
+    localStorage.setItem(
+      "pagination",
+      JSON.stringify(response?.data.search.pageInfo)
+    );
     // затипизировать репозиторий (для списка репозиториев)
     return response;
   }

@@ -10,10 +10,13 @@ interface InputProps {
 
 const Input = ({ onSearch }: InputProps) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const localValue = JSON.parse(localStorage.getItem("search") || "[]");
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
+
     if (inputRef.current && document.activeElement === inputRef.current) {
+      localStorage.setItem("search", inputRef.current.value);
       onSearch(inputRef.current?.value.trim());
     }
     return;
@@ -27,6 +30,7 @@ const Input = ({ onSearch }: InputProps) => {
           type="text"
           name="search__input"
           ref={inputRef}
+          value={localValue}
           onInput={handleSearch}
         />
         {/* <div className={styles.error}>{hasError ? "Not found" : ""}</div> */}

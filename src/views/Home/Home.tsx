@@ -15,20 +15,20 @@ import Loading from "../../components/Loading/Loading";
 
 const Home = () => {
   const [searchValue, setSearchValue] = React.useState<string | null>(null);
-
   const { list, status } = useAppSelector((state) => state.repos);
   const dispatch = useAppDispatch();
-
   const navigate = useNavigate();
 
   // при первом рендере компонента
   useEffect(() => {
-    dispatch(fetchAllMyRepos({ next: null, prev: null }));
+    if (!list) {
+      dispatch(fetchAllMyRepos({ next: null, prev: null }));
+    }
   }, []);
 
   // поиск репозиториев
   const handleSearch = (value: string | null) => {
-    if (value?.trim() !== null) {
+    if (value !== null) {
       setSearchValue(value);
       dispatch(
         searchRepoByName({
@@ -44,6 +44,7 @@ const Home = () => {
     }
   };
 
+  // открываем карточку репозитория
   const handleOpenCurrentRepo = (
     id: string | null,
     repoName: string | null,
